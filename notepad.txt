@@ -1,0 +1,116 @@
+# To set to Laravel
+composer global require laravel/installer 
+laravel new example-app
+#extension needed
+php intellisense, php namespace resolver, 
+# To access the mysql.....from the cmd
+Type mysql -u root
+# To show the users in the mysql
+SELECT User, Host FROM mysql.user;
+#To create new users
+CREATE USER 'someone@localhost' IDENTIFIED BY 'paasword';
+#To grant privileges to the user
+GRANT ALL PRIVILEGES ON ' * ' TO 'someone@localhost';
+FLUSH PRIVILEGES;
+# create new database
+CREATE database nameofdb;
+#select db;
+USE nameofdb;
+#create a table
+CREATE TABLE tablename(
+    id INT AUTO_INCREMENT,
+    firstname VARCHAR(30),
+    date DATETIME,
+    PRIMARY KEY(id)
+
+ );
+# drop table
+DROP TABLE tablename
+#to show the tables of the use db
+SHOW TABLES;
+# create a migrate file
+php artisan make:migration create_listings_table
+# to migrate the migration 
+php artisan migrate
+# create seed of db, fake dummy data
+php artisan db:seed
+# refresh the database
+php artisan migrate:refresh
+# refresh the database and seed
+php artisan migrate:refresh --seed
+ublic static function all(){
+    return 
+     [
+        [
+            'id' => 1,
+            'title' => 'Listing One',
+            'description' => 'In the beginning was the word, and the word was with God and the word was God.
+            It was in the beginning with God. By it was all that was made and nothing was made that was made.'
+        ],
+        [
+            'id' => 2,
+            'title' => 'Listing Two',
+            'description' => 'In the beginning God created the heavens and the earth. The earth was without form and void
+            And God said let there be light and there was light.'
+        ],
+        [
+            'id' => 3,
+            'title' => 'Listing three',
+            'description' => 'The earth is the Lord\'s and the fulness thereof, the world and they that dwell in it. For he has 
+            founded it upon seas and established it upon the waters.'
+        ],
+        [
+            'id' => 4,
+            'title' => 'Listing Four',
+            'description' => 'Bless the Lord oh my soul and all that is within me bless his holy name. 
+            Bless the Lord oh soul and forget not all hos benefits'
+        ]
+    ];
+}
+
+public static function find($id){
+    $listings = self::all();
+    foreach($listings as $listing){
+        if($listing['id'] == $id){
+            return $listing;
+        }
+
+    }
+}
+#using the layouts and components
+#Route binding
+$listing  =  Listing::find($id);
+     if($listing){
+      return view('listing',[
+        'listing' => $listing
+      ]);
+     }else{
+        abort('404');
+     }
+Route::get('/', function(){
+    return view('listings', [
+        
+        'listings' => Listing::all()
+    ]);
+});
+
+Route::get('/listings/{listing}', function(Listing $listing){
+    //route binding to aviod accesing unknown file  
+    // Route::get('/listings/{id}', function($id){ 'listing' => Listing::find($id)
+   
+      return view('listing',[
+        'listing' => $listing
+      ]);
+    
+     
+});
+#install clockwork to show the activities of the database on the browser
+#composer require itsgoingd/clockwork
+#paginate 
+using php artisan vendor:publish
+# model unguard
+#To upload a file
+change the default in the file.php in config to public
+$formFields['logo'] = $request->file('logo')->store('logos','public'); #store function, logos name of folder
+# create a link to the storage
+php artisan storage:link
